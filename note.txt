@@ -1,0 +1,6 @@
+arg error :
+---> we have no error with live, zjmp, fork, lfork, maybe also aff 
+
+
+#####################################################################################
+T_IND without modulo for below operation :
