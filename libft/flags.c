@@ -3,48 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gayoub <gayoub@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 17:32:07 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/09/19 22:20:59 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/10/07 03:03:19 by gayoub           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	put_bit(long long *op, int n)
+char		ft_set_flags(const char *str, _Bool *flags,
+								const char *acpt_flgs, void (*f)(char, _Bool*))
 {
-	long long b;
-
-	b = 1;
-	b <<= n;
-	*op |= b;
-}
-
-_Bool		ft_set_flags(char *str, long long *flags)
-{
-	int n;
-
-	if (!str || *str++ != '-' || !ft_isalnum(*str))
+	if (!str || *str++ != '-' || *str == '-' || !ft_isprint(*str))
 		return (0);
 	while (*str)
 	{
-		if (!ft_isalnum(*str))
+		if (ft_isinstr(*str, acpt_flgs) || (!acpt_flgs && ft_isalnum(*str)))
 		{
-			ft_putendl("koko");
-			continue;
+			flags[(int)*str] = 1;
+			if (f)
+				f(*str, flags);
 		}
-		n = 48 + (!ft_isdigit(*str) * 7) + ((*str >= 'a' && *str <= 'z') * 6);
-		put_bit(flags, (*str - n));
+		else
+			return (-1);
 		str++;
 	}
 	return (1);
 }
 
-_Bool		ft_flag_is_active(char c, long long flags)
+void		ft_unset_flags(int c, _Bool *flags)
 {
-	int n;
+	flags[c] = 0;
+}
 
-	n = 48 + (!ft_isdigit(c) * 7) + ((c >= 'a' && c <= 'z') * 6);
-	return ((flags >> (c - n)) & 1);
+_Bool		ft_flag_active(int c, _Bool *flags)
+{
+	return (flags[c]);
 }

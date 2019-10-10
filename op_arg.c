@@ -6,16 +6,11 @@
 /*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 17:17:13 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/10/09 22:46:13 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/10/10 23:57:34 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
-// void get_tdir(t_process *prc, int PC,t_op_component *cmp)
-// {
-// 	if(arg_code)
-// }
 
 int get_tdir(t_process *prc,int pc)
 {
@@ -45,6 +40,23 @@ int get_tind(t_process *prc, int pc)
 	return (ret);
 }
 
+_Bool get_reg(t_process *prc, int pc,int arg)
+{
+	int ret;
+	int i;
+	int addr;
+	if(prc->memory[ADDR(pc)] > 16 || prc->memory[ADDR(pc)] < 1)
+		return(0);
+	if(ft_find_int((int[7]){4, 5, 6, 7, 8, 10, 14}, prc->cmp.code, 7, NULL)
+																	&& arg == 3)
+		prc->cmp.arg[arg] = prc->memory[ADDR(pc)];
+	else if(ft_find_int((int[2]){2, 13}, prc->cmp.code, 2, NULL) && arg == 2)
+		prc->cmp.arg[arg] = prc->memory[ADDR(pc)];
+	else 
+		prc->cmp.arg[arg] = prc->reg[prc->memory[ADDR(pc)]];
+	return(1);
+}
+
 int  set_arg(t_process *prc, int code)
 {
 	int i;
@@ -65,8 +77,8 @@ int  set_arg(t_process *prc, int code)
 				prc->cmp.arg[i] = get_tdir(prc, prc->pc + pos);
 			if (argc ==  T_IND)
 				prc->cmp.arg[i] = get_tind(prc, prc->pc + pos);
-			else if (argc == T_REG)
-				prc->cmp.arg[i] = prc->reg[prc->pc];
+			else if (argc == T_REG && !get_reg(prc, prc->pc + pos, i))
+				return(0);
 			pos += argc != T_DIR ? 1 + (argc ==  T_IND) : op_tab[code].size_dir;
 		}
 		else
@@ -74,5 +86,6 @@ int  set_arg(t_process *prc, int code)
 		n -= 2;
 		i++;
 	}
+	prc->pc += pos;
 	return(1);
 }

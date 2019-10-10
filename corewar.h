@@ -6,12 +6,14 @@
 /*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 11:05:40 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/10/09 22:43:00 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/10/10 19:52:07 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/includes/libft.h"
 #include "op.h"
+
+#define ADDR(v) (v % MEM_SIZE)
 
 typedef union u_args {
 	char arg4 : 2;
@@ -36,7 +38,7 @@ typedef struct s_op {
 	char code;
 	const char *name;
 	char arg_num;
-	t_arg arg[3];
+	char arg[3];
 	short waiting_cycle;
 	_Bool arg_code;
 	_Bool carry;
@@ -62,5 +64,8 @@ typedef struct s_process {
 	struct s_process	*next;
 	t_op_component		cmp;
 } t_process;
+
+int get_mem(unsigned char *mem, int addr, int oct);
+void set_mem(unsigned char *mem, int addr, int val, int oct);
 
 t_op *op_tab;

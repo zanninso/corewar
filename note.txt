@@ -4,3 +4,8 @@ arg error :
 
 #####################################################################################
 T_IND without modulo for below operation :
+ldi 
+
+
+#####################################################################################
+if the arg is register you have to chose between retunrning the value the register or just send the index of it

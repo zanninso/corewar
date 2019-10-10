@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gayoub <gayoub@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/30 15:19:49 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/09/19 22:20:36 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/10/07 03:05:37 by gayoub           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,10 @@ void			ft_die(const char *message, int error_nb);
 
 int				ft_printf(const char *restrict fmt, ...);
 
-_Bool			ft_flag_is_active(char c, long long flags);
-_Bool			ft_set_flags(char *str, long long *flags);
+char			ft_set_flags(const char *str, _Bool *flags,
+								const char *acpt_flgs, void (*f)(char, _Bool*));
+void			ft_unset_flags(int c, _Bool *flags);
+
+_Bool			ft_flag_active(int c, _Bool *flags);
 
 #endif
