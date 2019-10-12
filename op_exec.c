@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 12:28:26 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/10/09 15:07:48 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/10/11 02:54:02 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,13 @@ int exe_op(t_process *prc)
     if(parse_operation(prc))
     {
         if(op_tab[prc->cmp.code].op_type == 1)
-            return (logical_op(prc, &prc->cmp));
-        if(op_tab[prc->cmp.code].op_type == 2)
-            return(fork_op(prc, &prc->cmp));
-        return(st_op(prc, &prc->cmp));
+            logical_op(prc, &prc->cmp);
+        else if(op_tab[prc->cmp.code].op_type == 2)
+            fork_op(prc, &prc->cmp);
+        st_op(prc, &prc->cmp);
+        if(op_tab[prc->cmp.code].carry)
+            set_carry(prc, &prc->cmp);
+        prc->cycle = op_tab[prc->cmp.code].waiting_cycle;
     }
     return(-1);
 }
