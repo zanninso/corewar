@@ -6,7 +6,7 @@
 /*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 12:28:26 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/10/11 02:54:02 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/11/04 05:30:43 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 _Bool *parse_operation(t_process *prc)
 {
-	
 	int i;
 	
 	ft_bzero(&prc->cmp,sizeof(t_op_component));

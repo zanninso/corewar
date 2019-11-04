@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 11:08:36 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/11/04 03:01:08 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/11/04 09:02:06 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,15 @@ void logical_op(t_process *prc, t_op_component *cmp)
 void fork_op(t_process *prc, t_op_component *cmp, t_vm *vm)
 {
 	t_process *new;
+	int pc;
 
+	if(prc->cmp.code == 12)
+		pc = ADDR(prc->pc + cmp->arg[0] % IDX_MOD);
+	else 
+		pc = ADDR(prc->pc + cmp->arg[0]);
     new = (t_process *)ft_memalloc(sizeof(t_process));
 	ft_memcpy(new, prc, sizeof(t_process));
-    new->pc = ADDR(prc->pc + cmp->arg[0]);
+    new->pc = pc;
 	new->prc_id = vm->arena.prc_last_id++;
 	vm->arena.nbr_process_alive++;
     new->cycle = 0;
@@ -85,11 +90,11 @@ void mem_op(t_process *prc, t_op_component *cmp)
 			set_mem(prc->memory, prc->pc + cmp->arg[1], cmp->arg[0], 4);	
 	}
 	if (cmp->code == 11)
-		set_mem(prc->memory, prc->pc + (cmp->arg[1] + (cmp->arg[2]) % IDX_MOD), cmp->arg[0], 4);
+		set_mem(prc->memory, prc->pc + (cmp->arg[1] + cmp->arg[2]) % IDX_MOD, cmp->arg[0], 4);
 	if (cmp->code == 2 || cmp->code == 13)
 		prc->reg[cmp->arg[1]] = cmp->arg[0];
 	if (cmp->code == 10)
 		prc->reg[cmp->arg[2]] = get_mem(prc->memory, prc->pc + cmp->arg[0] + cmp->arg[1], 4);
 	if (cmp->code == 14)
-		prc->reg[cmp->arg[2]] = get_mem(prc->memory, prc->pc + ((cmp->arg[0] + cmp->arg[1]) % IDX_MOD), 4);
+		prc->reg[cmp->arg[2]] = get_mem(prc->memory, prc->pc + (cmp->arg[0] + cmp->arg[1]) % IDX_MOD, 4);
 }

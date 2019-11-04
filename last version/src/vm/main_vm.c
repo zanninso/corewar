@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_vm.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 11:46:55 by souarrak          #+#    #+#             */
-/*   Updated: 2019/11/04 02:55:38 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/11/04 07:19:49 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int main(int argc, char **argv)
     get_input(argc, argv, &vm);
     // print_players(vm.player, vm.nb_players);
     load_arena(&vm);
-    start_war_vs(&vm);
+    start_war(&vm);
     print_result(&vm);
 
 

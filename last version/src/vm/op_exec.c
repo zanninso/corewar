@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 12:28:26 by aait-ihi          #+#    #+#             */
-/*   Updated: 2019/11/04 03:05:55 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/11/04 09:16:39 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void print_opbin(t_process *prc, t_vm *vm)
     op_size = get_op_size(vm, prc);
     while (i < op_size)
     {
-        ft_printf("%c%c ", hex[prc->memory[prc->pc + i] / 16], hex[prc->memory[prc->pc + i] % 16]);
+        ft_printf("%c%c ", hex[prc->memory[ADDR(prc->pc + i)] / 16], hex[prc->memory[ADDR(prc->pc + i)] % 16]);
         i++;
     }
     ft_printf("\n");
@@ -118,7 +118,7 @@ int exe_op(t_vm *vm, t_process *prc)
 
     ret = 0;
     prc->pc = ADDR(prc->pc);
-    if (vm->arena.cycle >= 2750)
+    if (vm->arena.cycle >= 6277)
         prc->pc += 0;
     if (prc->cycle == 0)
         set_op_code(prc, vm);
@@ -136,13 +136,13 @@ int exe_op(t_vm *vm, t_process *prc)
                 mem_op(prc, &prc->cmp);
             else
                 ret = live(vm, prc);
-            // print_opbin(prc, vm);
+            print_opbin(prc, vm);
             vm->op_tab[prc->cmp.code].carry ? set_carry(prc, &prc->cmp) : 0;
             prc->pc = ADDR(prc->pc + get_op_size(vm, prc));
         }
         else if(BETWEEN(prc->cmp.code, 1, 16))
         {
-            // print_opbin(prc, vm);
+            print_opbin(prc, vm);
              prc->pc = ADDR(prc->pc + get_op_size(vm, prc));
         }
         else 

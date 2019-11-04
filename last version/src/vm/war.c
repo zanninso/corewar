@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   war.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-ihi <aait-ihi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-ihi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 14:47:50 by souarrak          #+#    #+#             */
-/*   Updated: 2019/11/04 02:45:10 by aait-ihi         ###   ########.fr       */
+/*   Updated: 2019/11/04 07:20:53 by aait-ihi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,11 @@ void start_war(t_vm *vm)
 {
     while (vm->arena.cycle_to_die > 0 && vm->arena.nbr_process_alive > 0)
     {
-        //ft_printf("It is now cycle %d\n", vm->arena.cycle + 1);
+        // ft_printf("It is now cycle %d\n", vm->arena.cycle + 1);
         check_arena(vm);
 		execute_op(vm);
-		
+        vm->arena.count_current_cycle++;
+        vm->arena.cycle++;
         if (!vm->arena.process || vm->arena.cycle_to_die <= 0)
         {
             ft_printf("cycle = %d\n", vm->arena.cycle);
@@ -117,9 +118,6 @@ void start_war(t_vm *vm)
         }
         //refresh_arena(vm);
         // sleep(0.1);
-       
-        vm->arena.count_current_cycle++;
-        vm->arena.cycle++;
     }
 }
 
